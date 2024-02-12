@@ -13,7 +13,7 @@ console.log(typeof adaptive);
 console.log(screens.length);
 
 console.log(`Стоимость верстки экранов: 
-${screenPrice} nрублей / долларов / гривен / юани`)
+${screenPrice} рублей / долларов / гривен / юани`)
 
 console.log(`Стоимость разработки сайта: 
 ${fullPrice} рублей / долларов / гривен / юани`)
