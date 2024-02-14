@@ -1,3 +1,5 @@
+'use strict';
+
 const title = prompt('Как называется твой проект', 'Project')
 const screens = prompt('Какие типы экранов нужно разработать?', 'Простые, Сложные, Интерактивные')
 const screenPrice = +prompt('Сколько будет стоить данная работа')
