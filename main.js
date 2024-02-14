@@ -1,23 +1,34 @@
-const title = 'newProject'
-const screenPrice = 1500
+const title = prompt('Как называется твой проект', 'Project')
+const screens = prompt('Какие типы экранов нужно разработать?', 'Простые, Сложные, Интерактивные')
+const screenPrice = +prompt('Сколько будет стоить данная работа')
+const adaptive = confirm('Нужен ли адаптив ?')
+const service1 = prompt('Какой дополнительный тип услуг нужен?', 'Верстка')
+const servicePrice1 = +prompt('Сколько это будет стоить')
+const service2 = prompt('Какой дополнительный тип услуг нужен?', 'Адаптив')
+const servicePrice2 = +prompt('Сколько это будет стоить')
+
+const fullPrice = servicePrice1 + servicePrice2 + screenPrice
 const rollback = 20
-const fullPrice = 70000
 
-let adaptive = true
-let screens = 'Простые, Сложные, Интерактивные'
+const servicePricePercent = fullPrice - ((fullPrice / 100) * rollback)
 
-console.log(typeof title);
-console.log(typeof fullPrice);
-console.log(typeof adaptive);
+/* 
+не очень пока что понял, зачем нужно здесь округление, 
+но наверное это будет выглядить вот так: 
 
-console.log(screens.length);
+const servicePricePercent = Math.ceil(fullPrice - ((fullPrice / 100) * rollback))
+*/
 
-console.log(`Стоимость верстки экранов: 
-${screenPrice} рублей / долларов / гривен / юани`)
+if(fullPrice > 30000){
+    console.log('Даем скидку 10%');
+} else if(fullPrice > 15000 && fullPrice <= 30000){
+    console.log('Даем скидку 5%');
+} else if(fullPrice <= 15000 && fullPrice > 0){
+    console.log('Скидка не предусмотрена');
+} else if(fullPrice < 0){
+    console.log('Что то пошло не так');
+}
 
-console.log(`Стоимость разработки сайта: 
-${fullPrice} рублей / долларов / гривен / юани`)
 
-console.log(screens.toLowerCase().split());
-console.log(fullPrice * (rollback / 100));
+
 
