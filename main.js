@@ -7,9 +7,9 @@ const servicePrice1 = +prompt('Сколько это будет стоить')
 const service2 = prompt('Какой дополнительный тип услуг нужен?', 'Адаптив')
 const servicePrice2 = +prompt('Сколько это будет стоить')
 
-const fullPrice = servicePrice1 + servicePrice2 + screenPrice
 const rollback = 20
 
+const fullPrice = servicePrice1 + servicePrice2 + screenPrice
 const servicePricePercent = fullPrice - ((fullPrice / 100) * rollback)
 
 /* 
