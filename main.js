@@ -1,33 +1,113 @@
 'use strict';
 
-const title = prompt('Как называется твой проект', 'Project')
-const screens = prompt('Какие типы экранов нужно разработать?', 'Простые, Сложные, Интерактивные')
-const screenPrice = +prompt('Сколько будет стоить данная работа')
-const adaptive = confirm('Нужен ли адаптив ?')
-const service1 = prompt('Какой дополнительный тип услуг нужен?', 'Верстка')
-const servicePrice1 = +prompt('Сколько это будет стоить')
-const service2 = prompt('Какой дополнительный тип услуг нужен?', 'Адаптив')
-const servicePrice2 = +prompt('Сколько это будет стоить')
+let title
+let screens
+let screenPrice
+let adaptive
+let rollback = 20;
+let allServicePrices
+let fullPrice
+let servicePricePercent
+let service1
+let service2
 
-const rollback = 20
+const showTypeOf = function (variable) {
+    console.log(variable, typeof variable);
+};
 
-const fullPrice = servicePrice1 + servicePrice2 + screenPrice
-const servicePricePercent = Math.ceil(fullPrice - ((fullPrice / 100) * rollback))
+const isNumber = function (num) {
+    const trimValue = num === null ? num : num.trim()
 
+    let resultChecking
 
+    if (Number(trimValue)) {
+        resultChecking = true
+    } else {
+        resultChecking = false
+    }
 
-if(fullPrice > 30000){
-    console.log('Даем скидку 10%');
-} else if(fullPrice > 15000 && fullPrice <= 30000){
-    console.log('Даем скидку 5%');
-} else if(fullPrice <= 15000 && fullPrice > 0){
-    console.log('Скидка не предусмотрена');
-} else if(fullPrice === 0){
-    console.log('ну ты жадина');
-} else if(fullPrice < 0){
-    console.log('что то пошло не так');
+    return resultChecking
+}
+/*
+    объясняю почему я сделал так: Первый момент, я удаляю впринципе все пробелы, 
+    что бы их заранее уже не было. Если нажать отмену, то я записываю null, для того что бы
+    мое условие не дало сбой, ибо null не переведтся в число.
+    Ну и самый главный вопрос, нафига я сделал такую проверку, ответ прост, 
+    Саша не учел тот момент, что его проверка пропустит вот такой вариант "125ваываыв", хотя
+    вот с таким вариантом "dsfsdf123" его проверка справляется, в общем я решил сделать иначе
+    и вот что вышло, ТАДАМ!
+*/
+
+const asking = function () {
+    title = prompt("Как называется твой проект", "   КаЛьКулятор Верстки");
+    screens = prompt("Какие типы экранов нужно разработать?", "Простые, Сложные, Интерактивные");
+
+    do {
+        screenPrice = prompt("Сколько будет стоить данная работа");
+    }
+    while (!isNumber(screenPrice));
+
+    adaptive = confirm("Нужен ли адаптив ?");
 }
 
+const getAllServicePrice = function () {
+    let sum = 0
+    let num
 
+    for (let i = 0; i < 2; i++) {
 
+        if (i === 0) {
+            service1 = prompt("Какой дополнительный тип услуг нужен?", "Верстка");
+        } else if (i === 1) {
+            service2 = prompt("Какой дополнительный тип услуг нужен?", "Адаптив");
+        }
 
+        do {
+            num = prompt('сколько это будет стоить ?')
+        }
+        while (!isNumber(num));
+
+        sum += +num
+    }
+
+    return sum
+};
+
+function getFullPrice(screenPrice, sumService) {
+    return screenPrice + sumService;
+}
+
+const getTitle = function () {
+    const trimStr = title.trim();
+
+    return trimStr.split("")[0].toUpperCase() + trimStr.slice(1).toLowerCase();
+};
+
+const getServicePercentPrices = function (fullPrice, rollBack) {
+    return fullPrice - (fullPrice / 100) * rollBack;
+};
+
+const getRollBackMessage = function (price) {
+    if (price > 30000) {
+        return "Даем скидку 10%";
+    } else if (price > 15000 && price <= 30000) {
+        return "Даем скидку 5%";
+    } else if (price <= 15000 && price > 0) {
+        return "Скидка не предусмотрена";
+    } else if (price < 0) {
+        return "Что то пошло не так";
+    }
+};
+
+asking()
+
+showTypeOf(title);
+showTypeOf(adaptive);
+showTypeOf(screens);
+
+allServicePrices = getAllServicePrice();
+fullPrice = getFullPrice(+screenPrice, allServicePrices);
+getTitle();
+servicePricePercent = getServicePercentPrices(fullPrice, rollback);
+
+console.log(getRollBackMessage(fullPrice));
