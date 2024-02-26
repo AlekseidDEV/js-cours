@@ -106,7 +106,7 @@ const appData = {
         console.log(this.getRollBackMessage(this.fullPrice));
         
         for(let key in appData){
-            console.log(appData[key]);
+            console.log(key);
         }
     }
 };
